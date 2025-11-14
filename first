@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dream Keeper 💖✨</title>
+
+<!-- Soft Cute Font -->
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: radial-gradient(circle at top, #12003a, #2a0a69, #7437c8, #ff9ffb);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    overflow: hidden;
+  }
+
+  /* Floating animation for extra cuteness */
+  @keyframes floatSoft {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+  }
+
+  h1 {
+    font-size: 2.4em;
+    margin-bottom: 15px;
+    color: #ffe6ff;
+    text-shadow: 0 0 15px #ffbaff;
+    animation: floatSoft 4s ease-in-out infinite;
+  }
+
+  .box {
+    background: rgba(255, 220, 255, 0.22);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 35px rgba(255,150,255,0.45);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.25);
+    animation: floatSoft 6s ease-in-out infinite alternate;
+  }
+
+  p {
+    font-size: 16px;
+    color: #fff4ff;
+    margin-bottom: 15px;
+  }
+
+  input {
+    width: 90%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    background: rgba(255,255,255,0.35);
+    color: #5a006a;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(255,200,255,0.4);
+  }
+
+  input::placeholder {
+    color: #ffe0ff;
+  }
+
+  button {
+    background: linear-gradient(135deg, #ff7ddc, #ffb8f4);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    box-shadow: 0 0 18px rgba(255,160,255,0.7);
+    transition: 0.25s;
+  }
+
+  button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 25px rgba(255,190,255,1);
+  }
+
+  footer {
+    position: absolute;
+    bottom: 18px;
+    font-size: 14px;
+    color: #ffeaff;
+    opacity: 0.8;
+    text-shadow: 0 0 10px #ffbaff;
+  }
+
+  /* Soft floating sparkles */
+  .sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.7;
+    box-shadow: 0 0 10px white;
+    animation: sparkleFloat 5s infinite ease-in-out;
+  }
+
+  @keyframes sparkleFloat {
+    0% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(-20px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.7; }
+  }
+</style>
+</head>
+
+<body>
+
+  <h1>💗 Dream Keeper ✨</h1>
+
+  <div class="box">
+    <p>Write a dream you want to place in your magical sky 🌙</p>
+    <input type="text" id="dreamInput" placeholder="e.g., Visit kaaba, Learn arabic, Travel, Become a doctor...">
+    <button onclick="saveDream()">Add Dream 🌟</button>
+  </div>
+
+  <footer>Every dream becomes a glowing star in your sky ⭐</footer>
+
+<script>
+  // Add cute sparkles dynamically
+  for (let i = 0; i < 25; i++) {
+    const sp = document.createElement("div");
+    sp.classList.add("sparkle");
+    sp.style.left = Math.random() * window.innerWidth + "px";
+    sp.style.top = Math.random() * window.innerHeight + "px";
+    sp.style.animationDuration = (3 + Math.random() * 4) + "s";
+    sp.style.opacity = 0.5 + Math.random() * 0.5;
+    document.body.appendChild(sp);
+  }
+
+  function saveDream(){
+    const dream = document.getElementById("dreamInput").value.trim();
+    if(dream === ""){
+      alert("Please enter a dream first 💭💗");
+      return;
+    }
+
+    let dreams = JSON.parse(localStorage.getItem("dreams")) || [];
+    dreams.push(dream);
+    localStorage.setItem("dreams", JSON.stringify(dreams));
+
+    document.getElementById("dreamInput").value = "";
+    alert("Dream saved! 🌟 Let’s go see your sky!");
+    window.location.href = "dream.html";
+  }
+</script>
+
+</body>
+</html>
