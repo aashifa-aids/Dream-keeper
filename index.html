@@ -10,15 +10,22 @@
 <style>
   body {
     font-family: 'Quicksand', sans-serif;
-    background: linear-gradient(135deg, #c47bff, #ffb3f9, #a3fff9);
-    height: 100vh;
+    background: radial-gradient(circle at top, #12003a, #2a0a69, #7437c8, #ff9ffb);
+    min-height: 100vh;
     margin: 0;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: white;
     overflow: hidden;
+    animation: fadeIn 1.5s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes floatSoft {
@@ -28,73 +35,74 @@
   }
 
   h1 {
-    font-size: 2.5em;
-    margin-bottom: 18px;
-    color: #fff0ff;
-    text-shadow: 0 0 18px #ffb8ff;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 0 0 15px #ffbaff;
     animation: floatSoft 4s ease-in-out infinite;
   }
 
   .box {
-    background: rgba(255, 255, 255, 0.22);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 0 35px rgba(255,150,255,0.45);
-    text-align: center;
+    background: rgba(255, 220, 255, 0.25);
+    width: 100%;
+    max-width: 360px;
+    padding: 25px;
+    border-radius: 22px;
     backdrop-filter: blur(12px);
-    border: 2px solid rgba(255,255,255,0.25);
+    border: 2px solid rgba(255,255,255,0.3);
+    text-align: center;
+    box-shadow: 0 0 35px rgba(255,150,255,0.5);
     animation: floatSoft 6s ease-in-out infinite alternate;
-    width: 320px;
-  }
-
-  p {
-    font-size: 16px;
-    color: #fffaff;
   }
 
   input {
-    width: 90%;
-    padding: 14px;
-    border-radius: 12px;
-    border: none;
-    margin-bottom: 15px;
-    font-size: 16px;
-    text-align: center;
+    width: 100%;
+    padding: 16px;
+    border-radius: 15px;
+    font-size: 18px;
     outline: none;
-    background: rgba(255,255,255,0.45);
-    color: #5a006a;
+    border: none;
+    background: rgba(255,255,255,0.35);
+    color: #43005a;
     font-weight: 600;
-    box-shadow: 0 0 10px rgba(255,200,255,0.5);
-  }
-
-  input::placeholder {
-    color: #ffdfff;
+    margin-top: 10px;
+    margin-bottom: 18px;
+    box-shadow: 0 0 10px rgba(255,200,255,0.4);
   }
 
   button {
-    background: linear-gradient(135deg, #ff86e0, #c07bff);
-    color: white;
+    background: linear-gradient(135deg, #ff7ddc, #ffb8f4);
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
     border: none;
-    padding: 12px 25px;
-    border-radius: 12px;
+    font-size: 18px;
+    color: white;
+    font-weight: 700;
     cursor: pointer;
-    font-weight: bold;
-    font-size: 15px;
-    box-shadow: 0 0 18px rgba(255,160,255,0.7);
-    transition: 0.25s;
+    transition: 0.3s;
+    box-shadow: 0 0 20px rgba(255,160,255,0.8);
   }
 
   button:hover {
-    transform: scale(1.07);
-    box-shadow: 0 0 25px rgba(255,190,255,1);
+    transform: scale(1.05);
+  }
+
+  #quoteBox {
+    margin-top: 20px;
+    font-size: 16px;
+    font-style: italic;
+    opacity: 0.85;
+    text-shadow: 0 0 8px #ffcaff;
+    min-height: 50px;
+    animation: fadeIn 1s ease;
   }
 
   footer {
-    position: absolute;
-    bottom: 18px;
+    margin-top: 15px;
     font-size: 14px;
-    color: #ffeaff;
-    opacity: 0.8;
+    opacity: 0.85;
+    text-align: center;
   }
 
   .sparkle {
@@ -103,15 +111,15 @@
     height: 6px;
     background: white;
     border-radius: 50%;
-    opacity: 0.9;
+    opacity: 0.6;
     box-shadow: 0 0 10px white;
     animation: sparkleFloat 5s infinite ease-in-out;
   }
 
   @keyframes sparkleFloat {
-    0% { transform: translateY(0); opacity: 0.8; }
-    50% { transform: translateY(-25px); opacity: 1; }
-    100% { transform: translateY(0); opacity: 0.8; }
+    0% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(-15px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.7; }
   }
 </style>
 </head>
@@ -121,15 +129,18 @@
 <h1>💗 Dream Keeper ✨</h1>
 
 <div class="box">
-  <p>Write a dream you want to place in your magical sky 🌙</p>
-  <input type="text" id="dreamInput" placeholder="e.g., Visit Kaaba, Start business, Travel...">
+  <p>Add a dream you want to place in your magical sky 🌙</p>
+  <input type="text" id="dreamInput" placeholder="Visit Kaaba, Learn Arabic, Travel...">
   <button onclick="saveDream()">Add Dream 🌟</button>
+
+  <div id="quoteBox">✨ Loading inspiration...</div>
 </div>
 
 <footer>Every dream becomes a glowing star ⭐</footer>
 
 <script>
-  for (let i = 0; i < 25; i++) {
+  // Sparkles
+  for (let i = 0; i < 18; i++) {
     const sp = document.createElement("div");
     sp.classList.add("sparkle");
     sp.style.left = Math.random() * window.innerWidth + "px";
@@ -138,78 +149,55 @@
     document.body.appendChild(sp);
   }
 
-  function saveDream(){
+  function saveDream() {
     const dream = document.getElementById("dreamInput").value.trim();
-    if(dream === ""){
-      alert("Please enter a dream first 💭💗");
+
+    if (!dream) {
+      alert("Please enter a dream 💭💗");
       return;
     }
 
-    let dreams = JSON.parse(localStorage.getItem("dreams")) || [];
+    const dreams = JSON.parse(localStorage.getItem("dreams") || "[]");
     dreams.push(dream);
     localStorage.setItem("dreams", JSON.stringify(dreams));
-
-    document.getElementById("dreamInput").value = "";
     window.location.href = "dream.html";
   }
-</script>
 
-</body>
-</html>
-    background: white;
-    border-radius: 50%;
-    opacity: 0.7;
-    box-shadow: 0 0 10px white;
-    animation: sparkleFloat 5s infinite ease-in-out;
+  // Motivational + Islamic Quotes
+  const quotes = [
+    "✨ Trust Allah’s timing, it is always perfect.",
+    "⭐ Your dreams are seeds—water them with patience.",
+    "🌙 Every step closer is still progress.",
+    "💖 Allah does not burden a soul beyond what it can bear.",
+    "✨ Big journeys begin with small steps.",
+    "🌟 Don’t limit your dreams. Allah can do the impossible.",
+    "💫 Your future is as bright as your faith.",
+    "🌈 Keep going. Your time is coming.",
+    "🌙 Beautiful dreams come from a beautiful heart.",
+    "💖 Make dua — dreams grow when you pray for them.",
+    "⭐ Be the light you wish to see.",
+    "✨ Every day is a new chance to grow.",
+    "💛 Even the stars need darkness to shine.",
+    "🌙 Allah’s plan is always better than your fear.",
+    "💫 Your dreams are whispers from your heart."
+  ];
+
+  let quoteIndex = 0;
+
+  function rotateQuotes() {
+    const box = document.getElementById("quoteBox");
+    box.style.opacity = 0;
+
+    setTimeout(() => {
+      box.innerHTML = quotes[quoteIndex];
+      box.style.opacity = 1;
+
+      quoteIndex = (quoteIndex + 1) % quotes.length;
+    }, 500);
   }
 
-  @keyframes sparkleFloat {
-    0% { transform: translateY(0); opacity: 0.7; }
-    50% { transform: translateY(-20px); opacity: 1; }
-    100% { transform: translateY(0); opacity: 0.7; }
-  }
-</style>
-</head>
-
-<body>
-
-  <h1>💗 Dream Keeper ✨</h1>
-
-  <div class="box">
-    <p>Write a dream you want to place in your magical sky 🌙</p>
-    <input type="text" id="dreamInput" placeholder="e.g., Visit kaaba, Learn arabic, Travel, Become a doctor...">
-    <button onclick="saveDream()">Add Dream 🌟</button>
-  </div>
-
-  <footer>Every dream becomes a glowing star in your sky ⭐</footer>
-
-<script>
-  // Add cute sparkles dynamically
-  for (let i = 0; i < 25; i++) {
-    const sp = document.createElement("div");
-    sp.classList.add("sparkle");
-    sp.style.left = Math.random() * window.innerWidth + "px";
-    sp.style.top = Math.random() * window.innerHeight + "px";
-    sp.style.animationDuration = (3 + Math.random() * 4) + "s";
-    sp.style.opacity = 0.5 + Math.random() * 0.5;
-    document.body.appendChild(sp);
-  }
-
-  function saveDream(){
-    const dream = document.getElementById("dreamInput").value.trim();
-    if(dream === ""){
-      alert("Please enter a dream first 💭💗");
-      return;
-    }
-
-    let dreams = JSON.parse(localStorage.getItem("dreams")) || [];
-    dreams.push(dream);
-    localStorage.setItem("dreams", JSON.stringify(dreams));
-
-    document.getElementById("dreamInput").value = "";
-    alert("Dream saved! 🌟 Let’s go see your sky!");
-    window.location.href = "dream.html";
-  }
+  rotateQuotes();
+  setInterval(rotateQuotes, 5000);
 </script>
 
 </body>
