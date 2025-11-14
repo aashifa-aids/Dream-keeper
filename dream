@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Dreamy Sky ✨🌙</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    background: radial-gradient(circle at center, #0b022a, #140739, #050115);
+    font-family: 'Quicksand', sans-serif;
+    color: #ffeefe;
+  }
+
+  canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .dreams-box {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,215,255,0.18);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(255,150,255,0.4);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.2);
+    animation: floatUp 4s ease-in-out infinite alternate;
+    width: 300px;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  @keyframes floatUp {
+    from { transform: translate(-50%, 0px); }
+    to { transform: translate(-50%, -10px); }
+  }
+
+  h2 {
+    color: #ffd6ff;
+    text-shadow: 0 0 10px #ffb7ff;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .dream-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 12px;
+    border-radius: 12px;
+    margin: 6px 0;
+    color: #fff4ff;
+  }
+
+  .delete-btn {
+    background: #ff77ad;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.2s;
+  }
+
+  .delete-btn:hover {
+    background: #ff4c8b;
+  }
+
+  button.main {
+    background: linear-gradient(135deg, #ff8de4, #ffbdf7);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+</style>
+</head>
+
+<body>
+
+<canvas id="sky"></canvas>
+
+<div class="dreams-box">
+  <h2>🌙 Your Little Dreams ✨</h2>
+  <div id="dreamList"></div>
+
+  <button class="main" onclick="back()">Add More Dreams 💖</button>
+</div>
+
+<script>
+const canvas = document.getElementById("sky");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Load dreams
+let dreams = JSON.parse(localStorage.getItem("dreams")) || [];
+let stars = [];
+
+function renderDreamList() {
+  const dreamList = document.getElementById("dreamList");
+
+  if (dreams.length === 0) {
+    dreamList.innerHTML = "<p>No dreams yet 💭</p>";
+    stars = [];
+    return;
+  }
+
+  dreamList.innerHTML = dreams.map((d, i) => `
+    <div class="dream-item">
+      <span>⭐ ${d}</span>
+      <button class="delete-btn" onclick="deleteDream(${i})">✖</button>
+    </div>
+  `).join("");
+}
+
+function deleteDream(index) {
+  dreams.splice(index, 1);
+  localStorage.setItem("dreams", JSON.stringify(dreams));
+  setupStars();
+  renderDreamList();
+}
+
+// Create stars for each dream
+function setupStars() {
+  stars = dreams.map(() => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height * 0.8,
+    r: Math.random() * 2 + 1.5,
+    color: `hsl(${Math.random() * 360}, 100%, 85%)`
+  }));
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  stars.forEach(s => {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = s.color;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = s.color;
+    ctx.fill();
+  });
+
+  requestAnimationFrame(drawStars);
+}
+
+renderDreamList();
+setupStars();
+drawStars();
+
+function back() {
+  window.location.href = "first.html";
+}
+</script>
+
+</body>
+</html>
