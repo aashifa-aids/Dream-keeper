@@ -3,20 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Dream Sky ✨🌙</title>
+<title>Dream Keeper 💖✨</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-  body {
-    margin: 0;
+/* ===== GLOBAL ===== */
+body {
     font-family: 'Quicksand', sans-serif;
     background: radial-gradient(circle at center, #10002b, #1a0040, #2f006b);
+    height: 100vh;
+    margin: 0;
     overflow: hidden;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
 
-  /* AURORA EFFECT */
-  .aurora {
+/* ===== AURORA ===== */
+.aurora {
     position: fixed;
     top: 0;
     left: 0;
@@ -33,34 +40,82 @@
     filter: blur(80px);
     opacity: 0.55;
     animation: spinAurora 40s linear infinite;
-  }
+}
 
-  @keyframes spinAurora {
+@keyframes spinAurora {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
-  }
+}
 
-  /* BOTTOM NAV BAR */
-  .navBar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 15px 0;
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(12px);
-    display: flex;
-    justify-content: space-around;
-    color: white;
-    font-size: 17px;
-  }
+/* ===== FLOAT ANIMATION ===== */
+@keyframes floatSoft {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+}
 
-  .navBar div {
+/* ===== TITLE ===== */
+h1 {
+    font-size: 2.4em;
+    margin-bottom: 15px;
+    color: #ffe6ff;
+    text-shadow: 0 0 15px #ffbaff;
+    animation: floatSoft 4s ease-in-out infinite;
+}
+
+/* ===== INPUT BOX ===== */
+.box {
+    background: rgba(255, 220, 255, 0.22);
+    padding: 30px;
+    border-radius: 20px;
     text-align: center;
-    cursor: pointer;
-  }
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.25);
+    box-shadow: 0 0 35px rgba(255,150,255,0.45);
+    animation: floatSoft 6s ease-in-out infinite alternate;
+    z-index: 5;
+}
 
-  /* DREAM LIST PANEL */
-  .panel {
+.box p {
+    color: #fff4ff;
+}
+
+input {
+    width: 90%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 16px;
+    text-align: center;
+    background: rgba(255,255,255,0.35);
+    color: #5a006a;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(255,200,255,0.4);
+}
+
+input::placeholder {
+    color: #ffe0ff;
+}
+
+/* ===== BUTTON ===== */
+button {
+    background: linear-gradient(135deg, #ff7ddc, #ffb8f4);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(255,160,255,0.7);
+    transition: 0.25s;
+}
+button:hover {
+    transform: scale(1.07);
+}
+
+/* ===== PANEL ===== */
+.panel {
     position: fixed;
     left: 10px;
     top: 10px;
@@ -72,10 +127,9 @@
     border-radius: 15px;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 20px rgba(255,120,255,0.3);
-    color: white;
-  }
+}
 
-  .dream-item {
+.dream-item {
     background: rgba(255,255,255,0.18);
     padding: 10px;
     border-radius: 10px;
@@ -83,183 +137,223 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
+}
 
-  .delete-btn {
+.delete-btn {
     background: #ff3f7f;
-    border: none;
-    width: 26px;
-    height: 26px;
     border-radius: 50%;
     color: white;
-    font-size: 14px;
+    width: 26px;
+    height: 26px;
+    border: none;
     cursor: pointer;
-  }
+}
 
-  /* CANVAS */
-  canvas {
-    display: block;
-  }
+/* ===== NAV BAR ===== */
+.navBar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: space-around;
+}
 
-  /* FLOATING DREAM LABEL */
-  .dreamLabel {
+.navBar div {
+    cursor: pointer;
+}
+
+/* ===== LABELS ===== */
+.dreamLabel {
     position: absolute;
-    color: #ffd7ff;
     font-size: 14px;
     text-shadow: 0 0 8px #ffbaff;
-    pointer-events: none;
     opacity: 0.9;
-  }
+    pointer-events: none;
+}
+
+/* ===== SPARKLES ===== */
+.sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: sparkleFloat 5s infinite ease-in-out;
+}
+
+@keyframes sparkleFloat {
+    0% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(-20px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.7; }
+}
+
+/* ===== CANVAS ===== */
+canvas {
+    display: block;
+}
 </style>
 </head>
 
 <body>
 
+<h1>💗 Dream Keeper ✨</h1>
+
 <div class="aurora"></div>
 <canvas id="canvas"></canvas>
 
-<div class="panel">
-  <h3>🌙 Your Dreams</h3>
-  <div id="dreamList"></div>
+<div class="box">
+    <p>Write a dream you want to place in your magical sky 🌙</p>
+    <input type="text" id="dreamInput" placeholder="e.g., Visit Kaaba, Learn Arabic, Become a doctor...">
+    <button onclick="saveDream()">Add Dream 🌟</button>
 </div>
 
-<!-- NAVIGATION -->
+<div class="panel">
+    <h3>🌙 Your Dreams</h3>
+    <div id="dreamList"></div>
+</div>
+
 <div class="navBar">
-  <div onclick="back()">⬅ Home</div>
-  <div onclick="clearAll()">🗑 Clear</div>
+    <div onclick="back()">⬅ Home</div>
+    <div onclick="clearAll()">🗑 Clear</div>
 </div>
 
 <script>
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  setupStars();
+/* ===== SPARKLES ===== */
+for (let i=0;i<25;i++){
+    const sp=document.createElement("div");
+    sp.classList.add("sparkle");
+    sp.style.left=Math.random()*window.innerWidth+"px";
+    sp.style.top=Math.random()*window.innerHeight+"px";
+    document.body.appendChild(sp);
 }
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
 
-// LOAD DREAMS
+/* ===== CANVAS ===== */
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    setupStars();
+}
+window.addEventListener("resize",resize);
+
+/* ===== DREAM SYSTEM ===== */
 let dreams = JSON.parse(localStorage.getItem("dreams") || "[]");
 let stars = [];
 let labels = [];
 
-// DISPLAY DREAMS
-function renderDreamList() {
-  const list = document.getElementById("dreamList");
+function saveDream(){
+    const input=document.getElementById("dreamInput").value.trim();
+    if(!input) return alert("Please enter a dream 💭💗");
 
-  if (dreams.length === 0) {
-    list.innerHTML = "<p>No dreams yet 💭</p>";
-    stars = [];
-    labels.forEach(l => l.remove());
-    return;
-  }
+    dreams.push(input);
+    localStorage.setItem("dreams",JSON.stringify(dreams));
 
-  list.innerHTML = dreams.map((d, i) => `
-    <div class='dream-item'>
-      ⭐ ${d}
-      <button class='delete-btn' onclick='deleteDream(${i})'>✖</button>
-    </div>
-  `).join("");
-}
-
-function deleteDream(i) {
-  dreams.splice(i, 1);
-  localStorage.setItem("dreams", JSON.stringify(dreams));
-  setupStars();
-  renderDreamList();
-  updateLabels();
-}
-
-function clearAll() {
-  if (confirm("Clear all dreams? 🌙")) {
-    dreams = [];
-    localStorage.setItem("dreams", "[]");
-    setupStars();
+    document.getElementById("dreamInput").value="";
     renderDreamList();
-  }
+    setupStars();
 }
 
-// SETUP STARS + LABELS
-function setupStars() {
-  stars = dreams.map(() => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * (canvas.height * 0.8),
-    r: Math.random() * 3 + 2,
-    pulse: Math.random() * Math.PI,
-    color: `hsl(${Math.random() * 360}, 100%, 85%)`
-  }));
-
-  // Remove old labels
-  labels.forEach(l => l.remove());
-  labels = [];
-
-  dreams.forEach((d, i) => {
-    const label = document.createElement("div");
-    label.classList.add("dreamLabel");
-    label.innerHTML = d;
-    document.body.appendChild(label);
-    labels.push(label);
-  });
+function deleteDream(i){
+    dreams.splice(i,1);
+    localStorage.setItem("dreams",JSON.stringify(dreams));
+    renderDreamList();
+    setupStars();
 }
 
-// DRAW STARS + CONSTELLATIONS
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+function clearAll(){
+    if(!confirm("Clear all dreams? 🌙")) return;
+    dreams=[];
+    localStorage.setItem("dreams","[]");
+    renderDreamList();
+    setupStars();
+}
 
-  // CONSTELLATION LINES
-  ctx.strokeStyle = "rgba(255,255,255,0.2)";
-  ctx.lineWidth = 1;
+function back(){
+    window.location.href="index.html";
+}
 
-  ctx.beginPath();
-  stars.forEach((s, i) => {
-    if (i > 0) {
-      ctx.moveTo(stars[i - 1].x, stars[i - 1].y);
-      ctx.lineTo(stars[i].x, stars[i].y);
+/* ===== RENDER DREAM LIST ===== */
+function renderDreamList(){
+    const list=document.getElementById("dreamList");
+
+    if(dreams.length===0){
+        list.innerHTML="<p>No dreams yet 💭</p>";
+        return;
     }
-  });
-  ctx.stroke();
 
-  // STARS
-  stars.forEach((s, i) => {
-    s.pulse += 0.04;
-    const glow = (Math.sin(s.pulse) + 1.5) / 2;
+    list.innerHTML=dreams.map((d,i)=>`
+        <div class="dream-item">
+            ⭐ ${d}
+            <button class="delete-btn" onclick="deleteDream(${i})">✖</button>
+        </div>
+    `).join("");
+}
+
+/* ===== STARS ===== */
+function setupStars(){
+    stars=dreams.map(()=>({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height*0.8,
+        r:Math.random()*3+2,
+        pulse:Math.random()*Math.PI,
+        color:`hsl(${Math.random()*360},100%,85%)`
+    }));
+
+    labels.forEach(l=>l.remove());
+    labels=[];
+
+    dreams.forEach((d,i)=>{
+        const lbl=document.createElement("div");
+        lbl.classList.add("dreamLabel");
+        lbl.innerHTML=d;
+        document.body.appendChild(lbl);
+        labels.push(lbl);
+    });
+}
+
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
     ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r * glow, 0, Math.PI * 2);
-    ctx.fillStyle = s.color;
-    ctx.shadowBlur = 20 * glow;
-    ctx.shadowColor = s.color;
-    ctx.fill();
-
-    // Position labels
-    if (labels[i]) {
-      labels[i].style.left = (s.x + 10) + "px";
-      labels[i].style.top = (s.y - 10) + "px";
+    ctx.strokeStyle="rgba(255,255,255,0.2)";
+    for(let i=1;i<stars.length;i++){
+        ctx.moveTo(stars[i-1].x,stars[i-1].y);
+        ctx.lineTo(stars[i].x,stars[i].y);
     }
-  });
+    ctx.stroke();
 
-  requestAnimationFrame(draw);
+    stars.forEach((s,i)=>{
+        s.pulse+=0.04;
+        const glow=(Math.sin(s.pulse)+1.5)/2;
+
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r*glow,0,Math.PI*2);
+        ctx.fillStyle=s.color;
+        ctx.shadowBlur=20*glow;
+        ctx.shadowColor=s.color;
+        ctx.fill();
+
+        if(labels[i]){
+            labels[i].style.left=(s.x+10)+"px";
+            labels[i].style.top=(s.y-10)+"px";
+        }
+    });
+
+    requestAnimationFrame(draw);
 }
 
-renderDreamList();
-setupStars();
-draw();
-
-function updateLabels() {
-  labels.forEach((l, i) => {
-    if (stars[i]) {
-      l.style.left = stars[i].x + "px";
-      l.style.top = stars[i].y + "px";
-    }
-  });
-}
-
-function back() {
-  window.location.href = "index.html";
-}
+/* ===== SAFE INITIALIZATION FIX ===== */
+window.onload = () => {
+    resize();          // Properly set canvas size first
+    renderDreamList(); // Load saved dreams
+    setupStars();      // Place stars + labels
+    draw();            // Start animation
+};
 </script>
 
 </body>
